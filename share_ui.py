@@ -16,7 +16,7 @@ st.title("Recommendation for substitute product")
 
 # Connect to Google Sheets
 gsheet_url = st.secrets["gsheet_url_data"]
-print(gsheet_url)
+st.write(gsheet_url)
 conn = connect()
 rows = conn.execute(f'SELECT * FROM "{gsheet_url}"')
 data = pd.DataFrame(rows)
