@@ -16,9 +16,16 @@ st.title("Recommendation for substitute product")
 
 # Connect to Google Sheets
 gsheet_url = st.secrets["gsheet_url_data"]
-st.write(gsheet_url)
+
 conn = connect()
 rows = conn.execute(f'SELECT * FROM "{gsheet_url}"')
 data = pd.DataFrame(rows)
+
+#--------------------- SIDEBAR ----------------
+
+st.sidebar.title("Product Description")
+description_txt = st.sidebar.selectbox("Select category group area", ['Site Products & Logistics', 'IT (Server & Storage)'])
+
+description_txt = st.sidebar.selectbox("Select description", data['DESCRIPTION_TEXT'].unique())
 
 
