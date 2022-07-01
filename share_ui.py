@@ -23,8 +23,8 @@ def get_df(url):
     return df
 
 
-data = get_df(st.secrets["gsheet_url_data"])
-distances = get_df(st.secrets["gsheet_url_cos1"])
+data = get_df("gsheet_url_data")
+distances = get_df("gsheet_url_cos1")
 
 #--------------------- SIDEBAR ----------------
 
