@@ -59,19 +59,19 @@ st.dataframe(data[(data['DESCRIPTION']==prod_data)].reset_index(drop=True).style
 
 st.write(""" ## 📊 Substitude products: """)
 
-distances.index = distances.columns
+#distances.index = distances.columns
 
-n_neigh = st.selectbox("Number of substitude products to recommend", [i+1 for i in range(20)])
+#n_neigh = st.selectbox("Number of substitude products to recommend", [i+1 for i in range(20)])
 
-neighbors = distances.nsmallest(n_neigh+1, prod_data)[prod_data]
-neigh_prod = data[data['DESCRIPTION'].isin(list(neighbors.index))].reset_index(drop=True)
+#neighbors = distances.nsmallest(n_neigh+1, prod_data)[prod_data]
+#neigh_prod = data[data['DESCRIPTION'].isin(list(neighbors.index))].reset_index(drop=True)
 
-for i in range(len(neighbors)):
-    neigh_prod.loc[neigh_prod['DESCRIPTION'] == neighbors.index[i], 'Distance'] = neighbors.values[i]
+#for i in range(len(neighbors)):
+#    neigh_prod.loc[neigh_prod['DESCRIPTION'] == neighbors.index[i], 'Distance'] = neighbors.values[i]
 
-neigh_prod = neigh_prod.sort_values('Distance').reset_index(drop=True)
+#neigh_prod = neigh_prod.sort_values('Distance').reset_index(drop=True)
 
-st.dataframe(neigh_prod.style.format({"LOCAL_PRICE": "{:.2f}", "Distance": "{:.3f}"}))
+#st.dataframe(neigh_prod.style.format({"LOCAL_PRICE": "{:.2f}", "Distance": "{:.3f}"}))
 
 #------------------ Find similarities -----------------
 
