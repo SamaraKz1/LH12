@@ -5,7 +5,6 @@ Run command from inside folder:
 >> streamlit run ui.py
 """
 
-from turtle import distance
 import numpy as np
 import pandas as pd
 import streamlit as st
