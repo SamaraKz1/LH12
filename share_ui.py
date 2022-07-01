@@ -15,9 +15,9 @@ st.set_page_config(page_title="LH12 Price Recommendation", layout="wide", page_i
 st.title("Recommendation for substitute product")
 
 # Connect to Google Sheets
-gsheet_url_data = st.secrets["gsheet_url_data"]
+gsheet_url = st.secrets["gsheet_url_data"]
 conn = connect()
-rows = conn.execute(f'SELECT * FROM "{gsheet_url_data}"')
+rows = conn.execute(f'SELECT * FROM "{gsheet_url}"')
 data = pd.DataFrame(rows)
 
 
