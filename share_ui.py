@@ -7,10 +7,9 @@ import streamlit as st
 st.title("My First Web App")
 
 #st.title("Connect to Google Sheets")
-#gsheet_url_data = "https://docs.google.com/spreadsheets/d/1Bk-eHoZtRuRH9bsgELzMxy-L22r6qNRbHzI4ztvkhrw/edit?usp=sharing"
-
+gsheet_url_data = st.secrets["gsheet_url_data"]
 #conn = connect()
 #rows = conn.execute(f'SELECT * FROM "{gsheet_url_data}"')
 #df_gsheet = pd.DataFrame(rows)
 #st.write(df_gsheet)
-st.write('Huraaaayy!!')
+st.write(gsheet_url_data)
