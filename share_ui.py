@@ -26,7 +26,11 @@ def get_df(url):
 
 
 data = get_df("gsheet_url_data")
-distances = get_df("gsheet_url_cos1")
+descriptions = sorted(set(data['DESCRIPTION']))
+vectorizer = CountVectorizer(input='content', max_features=2500)
+wordcounts = vectorizer.fit_transform(descriptions).toarray()
+
+cosine_dist = pd.DataFrame(squareform(pdist(wordcounts, metric='cosine')), index=descriptions, columns=descriptions)
 
 #--------------------- SIDEBAR ----------------
 
@@ -63,7 +67,9 @@ st.write(""" ## 📊 Substitude products: """)
 
 #distances.index = distances.columns
 
-#n_neigh = st.selectbox("Number of substitude products to recommend", [i+1 for i in range(20)])
+n_neigh = st.selectbox("Number of substitude products to recommend", [i+1 for i in range(20)])
+
+
 
 #neighbors = distances.nsmallest(n_neigh+1, prod_data)[prod_data]
 #neigh_prod = data[data['DESCRIPTION'].isin(list(neighbors.index))].reset_index(drop=True)
