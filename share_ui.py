@@ -30,7 +30,7 @@ descriptions = sorted(set(data['DESCRIPTION']))
 vectorizer = CountVectorizer(input='content', max_features=2500)
 wordcounts = vectorizer.fit_transform(descriptions).toarray()
 
-cosine_dist = pd.DataFrame(squareform(pdist(wordcounts, metric='cosine')), index=descriptions, columns=descriptions)
+#cosine_dist = pd.DataFrame(squareform(pdist(wordcounts, metric='cosine')), index=descriptions, columns=descriptions)
 
 #--------------------- SIDEBAR ----------------
 
