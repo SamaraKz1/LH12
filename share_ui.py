@@ -67,7 +67,7 @@ st.write(""" ## 📊 Substitude products: """)
 
 #distances.index = distances.columns
 
-n_neigh = st.selectbox("Number of substitude products to recommend", [i+1 for i in range(20)])
+#n_neigh = st.selectbox("Number of substitude products to recommend", [i+1 for i in range(20)])
 
 
 
