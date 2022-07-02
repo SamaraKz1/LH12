@@ -8,6 +8,8 @@ Run command from inside folder:
 import numpy as np
 import pandas as pd
 import streamlit as st
+from sklearn.feature_extraction.text import CountVectorizer
+from scipy.spatial.distance import pdist, squareform
 
 from gsheetsdb import connect
 
