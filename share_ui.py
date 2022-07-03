@@ -9,12 +9,9 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 from sklearn.feature_extraction.text import CountVectorizer
-from scipy.spatial.distance import pdist, squareform
+from scipy.spatial.distance import pdist, cdist, squareform
 
 from gsheetsdb import connect
-
-st.set_page_config(page_title="LH12 Price Recommendation", layout="wide", page_icon='📝') 
-st.title("Recommendation for substitute product")
 
 # Connect to Google Sheets
 def get_df(url):
@@ -30,17 +27,19 @@ descriptions = sorted(set(data['DESCRIPTION']))
 vectorizer = CountVectorizer(input='content', max_features=2500)
 wordcounts = vectorizer.fit_transform(descriptions).toarray()
 
-#cosine_dist = pd.DataFrame(squareform(pdist(wordcounts, metric='cosine')), index=descriptions, columns=descriptions)
+#----------------------TITLES------------------
+st.set_page_config(page_title="LH12 Price Recommendation", layout="wide", page_icon='📝') 
+st.title("Recommendation for substitute product")
 
 #--------------------- SIDEBAR ----------------
 
 st.sidebar.title("Product Description")
-description_txt = st.sidebar.selectbox("Select category group area", ['Site Products & Logistics', 'IT (Server & Storage)'])
+category = st.sidebar.selectbox("Select category group area", ['Site Products & Logistics', 'IT (Server & Storage)'])
 
-description_txt = st.sidebar.selectbox("Select description", data['DESCRIPTION_TEXT'].unique())
+description = st.sidebar.selectbox("Select description", data['DESCRIPTION_TEXT'].unique())
 
-list_specifications = data[data['DESCRIPTION_TEXT']==description_txt]['DESCRIPTION'].unique()
-prod_data = st.sidebar.selectbox("Select specifications", list_specifications)
+list_specifications = data[data['DESCRIPTION_TEXT']==description]['DESCRIPTION'].unique()
+product = st.sidebar.selectbox("Select specifications", list_specifications)
 
 st.sidebar.title("Product Comparison")
 st.markdown(
@@ -57,21 +56,23 @@ options = st.sidebar.multiselect("Select mutiple descriptions to compare", data[
 
 #---------------------- Body ------------------
 
-#st.write(" The product info for the selected description:")
-#st.dataframe(data[(data['DESCRIPTION_TEXT']==description_txt)].reset_index(drop=True).style.format({"LOCAL_PRICE": "{:.2f}"}))
-
 st.write(" The product info for the selected specification:")
-st.dataframe(data[(data['DESCRIPTION']==prod_data)].reset_index(drop=True).style.format({"LOCAL_PRICE": "{:.2f}"}))
+
+#if category == 'Site Products & Logistics':
+
+st.dataframe(data[(data['DESCRIPTION']==product)].reset_index(drop=True).style.format({"LOCAL_PRICE": "{:.2f}"}))
 
 st.write(""" ## 📊 Substitude products: """)
-
 #distances.index = distances.columns
 
-#n_neigh = st.selectbox("Number of substitude products to recommend", [i+1 for i in range(20)])
+n_neigh = st.selectbox("Number of substitude products to recommend", [i+1 for i in range(20)])
+
+idx = descriptions.index(product)
 
 
+distances = cdist(wordcounts[wordcounts].reshape(1,-1), wordcounts, metric='cosine')
 
-#neighbors = distances.nsmallest(n_neigh+1, prod_data)[prod_data]
+neighbors = distances.nsmallest(n_neigh+1, product)[product]
 #neigh_prod = data[data['DESCRIPTION'].isin(list(neighbors.index))].reset_index(drop=True)
 
 #for i in range(len(neighbors)):
