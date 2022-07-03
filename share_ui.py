@@ -71,8 +71,12 @@ idx = descriptions.index(product)
 
 
 distances = cdist(wordcounts[wordcounts].reshape(1,-1), wordcounts, metric='cosine')
+distances = pd.DataFrame(distances, index=descriptions, columns = ['Distance']).reset_index().rename(columns = {'index':'PRODNO'})
+neighbors = distances.nsmallest(5, 'Distance')
 
-neighbors = distances.nsmallest(n_neigh+1, product)[product]
+st.write(neighbors)
+
+#neighbors = distances.nsmallest(n_neigh+1, product)[product]
 #neigh_prod = data[data['DESCRIPTION'].isin(list(neighbors.index))].reset_index(drop=True)
 
 #for i in range(len(neighbors)):
