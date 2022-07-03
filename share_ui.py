@@ -13,7 +13,6 @@ from scipy.spatial.distance import pdist, cdist, squareform
 
 from gsheetsdb import connect
 
-st.write('yes')
 # Connect to Google Sheets
 def get_df(url):
     gsheet_url = st.secrets[url]
@@ -24,7 +23,6 @@ def get_df(url):
 
 
 data = get_df("gsheet_url_data")
-st.write('yes')
 descriptions = sorted(set(data['DESCRIPTION']))
 vectorizer = CountVectorizer(input='content', max_features=2500)
 wordcounts = vectorizer.fit_transform(descriptions).toarray()
@@ -74,12 +72,12 @@ idx = descriptions.index(product)
 
 distances = cdist(wordcounts[wordcounts].reshape(1,-1), wordcounts, metric='cosine')
 distances = pd.DataFrame(distances, index=descriptions, columns = ['Distance']).reset_index().rename(columns = {'index':'PRODNO'})
-neighbors = distances.nsmallest(5, 'Distance')
+neighbors = distances.nsmallest(n_neigh+1, 'Distance')
 
-st.write(neighbors)
 
-#neighbors = distances.nsmallest(n_neigh+1, product)[product]
-#neigh_prod = data[data['DESCRIPTION'].isin(list(neighbors.index))].reset_index(drop=True)
+neigh_prod = pd.merge(neighbors, data, on=['DESCRIPTION'], how='in').sort_values('Distance').reset_index(drop=True)
+
+st.write(neigh_prod)
 
 #for i in range(len(neighbors)):
 #    neigh_prod.loc[neigh_prod['DESCRIPTION'] == neighbors.index[i], 'Distance'] = neighbors.values[i]
