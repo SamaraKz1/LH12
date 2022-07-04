@@ -25,7 +25,8 @@ def get_df(url):
 
 
 #data = get_df("gsheet_url_data")
-gsheet_url = "https://docs.google.com/spreadsheets/d/1J85lbEUpc4GaERN4DQA-b6nfATQDjauJOH7IfnFmZ1M/edit#gid=59621775"
+
+gsheet_url = "https://docs.google.com/spreadsheets/d/1J85lbEUpc4GaERN4DQA-b6nfATQDjauJOH7IfnFmZ1M/edit?usp=sharing"
 conn = connect()
 rows = conn.execute(f'SELECT * FROM "{gsheet_url}"')
 
