@@ -14,23 +14,15 @@ from scipy.spatial.distance import pdist, cdist, squareform
 from gsheetsdb import connect
 
 # Connect to Google Sheets
-#def get_df(url):
-#    gsheet_url = st.secrets[url]
-#    conn = connect()
-#    print('yes')
-#    rows = conn.execute(f'SELECT * FROM "{gsheet_url}"')
-#    print('yes')
-#    df = pd.DataFrame(rows)
-#    return df
+def get_df(url):
+    gsheet_url = st.secrets[url]
+    conn = connect()
+    rows = conn.execute(f'SELECT * FROM "{gsheet_url}"')
+    df = pd.DataFrame(rows)
+    return df
 
 
-#data = get_df("gsheet_url_data")
-
-gsheet_url = "https://docs.google.com/spreadsheets/d/1J85lbEUpc4GaERN4DQA-b6nfATQDjauJOH7IfnFmZ1M/edit?usp=sharing"
-conn = connect()
-rows = conn.execute(f'SELECT * FROM "{gsheet_url}"')
-
-data = pd.DataFrame(rows)
+data = get_df("gsheet_url_data")
 st.write(data)
 
 descriptions = sorted(set(data['DESCRIPTION']))
