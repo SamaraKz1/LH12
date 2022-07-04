@@ -41,19 +41,6 @@ description = st.sidebar.selectbox("Select description", data['DESCRIPTION_TEXT'
 list_specifications = data[data['DESCRIPTION_TEXT']==description]['DESCRIPTION'].unique()
 product = st.sidebar.selectbox("Select specifications", list_specifications)
 
-#st.sidebar.title("Product Comparison")
-#st.markdown(
-#    """
-#<style>
-#span[data-baseweb="tag"] {
-#  background-color: grey !important;
-#}
-#</style>
-#""",
-#    unsafe_allow_html=True,
-#)
-#options = st.sidebar.multiselect("Select mutiple descriptions to compare", data['DESCRIPTION'].unique())
-
 #============================ Body ==============================
 
 st.write(" The product info for the selected specification:")
@@ -64,7 +51,7 @@ st.dataframe(data[(data['DESCRIPTION']==product)].reset_index(drop=True).style.f
 
 st.write(""" ## 📊 Substitude products: """)
 
-n_neigh = int(st.text_input("Number of substitude products to recommend", "3"))
+n_neigh = st.selectbox("Number of substitude products to recommend", [i+1 for i in range(20)])
 
 idx = descriptions.index(product)
 
@@ -77,7 +64,17 @@ st.dataframe(neigh_prod.style.format({"LOCAL_PRICE": "{:.2f}", "Distance": "{:.3
 
 st.write(""" ## 📊 Compare given products: """)
 
-
+st.markdown(
+    """
+<style>
+span[data-baseweb="tag"] {
+  background-color: grey !important;
+}
+</style>
+""",
+    unsafe_allow_html=True,
+)
+options = st.multiselect("Select mutiple descriptions to compare", data['DESCRIPTION'].unique())
 #------------------ Find similarities -----------------
 
 
