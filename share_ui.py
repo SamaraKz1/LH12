@@ -27,8 +27,6 @@ descriptions = sorted(set(data['DESCRIPTION']))
 vectorizer = CountVectorizer(input='content', max_features=2500)
 wordcounts = vectorizer.fit_transform(descriptions).toarray()
 
-#st.write(data)
-
 #----------------------TITLES------------------
 st.set_page_config(page_title="LH12 Price Recommendation", layout="wide", page_icon='📝') 
 st.title("Recommendation for substitute product")
@@ -38,10 +36,10 @@ st.title("Recommendation for substitute product")
 st.sidebar.title("Product Description")
 category = st.sidebar.selectbox("Select category group area", ['Site Products & Logistics', 'IT (Server & Storage)'])
 
-#description = st.sidebar.selectbox("Select description", data['DESCRIPTION_TEXT'].unique())
+description = st.sidebar.selectbox("Select description", data['DESCRIPTION_TEXT'].unique())
 
-#list_specifications = data[data['DESCRIPTION_TEXT']==description]['DESCRIPTION'].unique()
-#product = st.sidebar.selectbox("Select specifications", list_specifications)
+list_specifications = data[data['DESCRIPTION_TEXT']==description]['DESCRIPTION'].unique()
+product = st.sidebar.selectbox("Select specifications", list_specifications)
 
 #st.sidebar.title("Product Comparison")
 #st.markdown(
