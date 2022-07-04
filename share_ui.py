@@ -15,15 +15,15 @@ from gsheetsdb import connect
 
 # Connect to Google Sheets
 @st.cache
-def get_df(url):
-    gsheet_url = st.secrets[url]
+def get_df():
+    gsheet_url = st.secrets["gsheet_url_data"]
     conn = connect()
     rows = conn.execute(f'SELECT * FROM "{gsheet_url}"')
     df = pd.DataFrame(rows)
     return df
 
 
-data = get_df("gsheet_url_data")
+data = get_df()
 descriptions = sorted(set(data['DESCRIPTION']))
 vectorizer = CountVectorizer(input='content', max_features=2500)
 wordcounts = vectorizer.fit_transform(descriptions).toarray()
