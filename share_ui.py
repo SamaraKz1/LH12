@@ -71,11 +71,10 @@ idx = descriptions.index(product)
 distances = cdist(wordcounts, wordcounts[idx].reshape(1,-1), metric='cosine')
 distances = pd.DataFrame(distances, index=descriptions, columns = ['Distance']).reset_index().rename(columns = {'index':'PRODNO'})
 neighbors = distances.nsmallest(n_neigh+1, 'Distance')
-st.write(neighbors)
 
-#neigh_prod = pd.merge(neighbors, data, on=['DESCRIPTION'], how='in').sort_values('Distance').reset_index(drop=True)
+neigh_prod = pd.merge(neighbors, data, on=['DESCRIPTION'], how='in').sort_values('Distance').reset_index(drop=True)
 
-#st.write(neigh_prod)
+st.write(neigh_prod)
 
 #for i in range(len(neighbors)):
 #    neigh_prod.loc[neigh_prod['DESCRIPTION'] == neighbors.index[i], 'Distance'] = neighbors.values[i]
