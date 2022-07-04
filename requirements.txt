@@ -1,2 +1,3 @@
 gsheetsdb
 scikit-learn
+protobuf~=3.19.0
