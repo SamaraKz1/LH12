@@ -68,9 +68,9 @@ n_neigh = st.selectbox("Number of substitude products to recommend", [i+1 for i 
 
 idx = descriptions.index(product)
 
-st.write(idx)
+st.write(idx, wordcounts.shape, wordcounts[idx].reshape(1,-1).shape)
 
-#distances = cdist(wordcounts[idx].reshape(1,-1), wordcounts, metric='cosine')
+#distances = cdist(wordcounts, wordcounts[idx].reshape(1,-1), metric='cosine')
 #distances = pd.DataFrame(distances, index=descriptions, columns = ['Distance']).reset_index().rename(columns = {'index':'PRODNO'})
 #neighbors = distances.nsmallest(n_neigh+1, 'Distance')
 #st.write(neighbors)
