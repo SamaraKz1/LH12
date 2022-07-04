@@ -65,19 +65,19 @@ st.dataframe(data[(data['DESCRIPTION']==product)].reset_index(drop=True).style.f
 st.write(""" ## 📊 Substitude products: """)
 #distances.index = distances.columns
 
-n_neigh = st.selectbox("Number of substitude products to recommend", [i+1 for i in range(20)])
+#n_neigh = st.selectbox("Number of substitude products to recommend", [i+1 for i in range(20)])
 
-idx = descriptions.index(product)
-
-
-distances = cdist(wordcounts[wordcounts].reshape(1,-1), wordcounts, metric='cosine')
-distances = pd.DataFrame(distances, index=descriptions, columns = ['Distance']).reset_index().rename(columns = {'index':'PRODNO'})
-neighbors = distances.nsmallest(n_neigh+1, 'Distance')
+#idx = descriptions.index(product)
 
 
-neigh_prod = pd.merge(neighbors, data, on=['DESCRIPTION'], how='in').sort_values('Distance').reset_index(drop=True)
+#distances = cdist(wordcounts[wordcounts].reshape(1,-1), wordcounts, metric='cosine')
+#distances = pd.DataFrame(distances, index=descriptions, columns = ['Distance']).reset_index().rename(columns = {'index':'PRODNO'})
+#neighbors = distances.nsmallest(n_neigh+1, 'Distance')
 
-st.write(neigh_prod)
+
+#neigh_prod = pd.merge(neighbors, data, on=['DESCRIPTION'], how='in').sort_values('Distance').reset_index(drop=True)
+
+#st.write(neigh_prod)
 
 #for i in range(len(neighbors)):
 #    neigh_prod.loc[neigh_prod['DESCRIPTION'] == neighbors.index[i], 'Distance'] = neighbors.values[i]
