@@ -64,7 +64,7 @@ st.dataframe(data[(data['DESCRIPTION']==product)].reset_index(drop=True).style.f
 
 st.write(""" ## 📊 Substitude products: """)
 
-n_neigh = st.text_input("Number of substitude products to recommend")
+n_neigh = st.text_input("Number of substitude products to recommend", "3")
 
 idx = descriptions.index(product)
 
