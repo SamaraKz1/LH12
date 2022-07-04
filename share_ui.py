@@ -42,27 +42,27 @@ list_specifications = data[data['DESCRIPTION_TEXT']==description]['DESCRIPTION']
 product = st.sidebar.selectbox("Select specifications", list_specifications)
 
 st.sidebar.title("Product Comparison")
-st.markdown(
-    """
-<style>
-span[data-baseweb="tag"] {
-  background-color: grey !important;
-}
-</style>
-""",
-    unsafe_allow_html=True,
-)
-options = st.sidebar.multiselect("Select mutiple descriptions to compare", data['DESCRIPTION'].unique())
+#st.markdown(
+#    """
+#<style>
+#span[data-baseweb="tag"] {
+#  background-color: grey !important;
+#}
+#</style>
+#""",
+#    unsafe_allow_html=True,
+#)
+#options = st.sidebar.multiselect("Select mutiple descriptions to compare", data['DESCRIPTION'].unique())
 
 #---------------------- Body ------------------
 
-st.write(" The product info for the selected specification:")
+#st.write(" The product info for the selected specification:")
 
 #if category == 'Site Products & Logistics':
 
-st.dataframe(data[(data['DESCRIPTION']==product)].reset_index(drop=True).style.format({"LOCAL_PRICE": "{:.2f}"}))
+#st.dataframe(data[(data['DESCRIPTION']==product)].reset_index(drop=True).style.format({"LOCAL_PRICE": "{:.2f}"}))
 
-st.write(""" ## 📊 Substitude products: """)
+#st.write(""" ## 📊 Substitude products: """)
 #distances.index = distances.columns
 
 #n_neigh = st.selectbox("Number of substitude products to recommend", [i+1 for i in range(20)])
