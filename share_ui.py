@@ -54,7 +54,7 @@ product = st.sidebar.selectbox("Select specifications", list_specifications)
 #)
 #options = st.sidebar.multiselect("Select mutiple descriptions to compare", data['DESCRIPTION'].unique())
 
-#---------------------- Body ------------------
+#============================ Body ==============================
 
 st.write(" The product info for the selected specification:")
 
@@ -75,11 +75,7 @@ neighbors = distances.nsmallest(n_neigh+1, 'Distance')
 neigh_prod = pd.merge(neighbors, data, on='DESCRIPTION', how='inner').sort_values('Distance').drop('DESCRIPTION_TEXT', axis=1).reset_index(drop=True)
 st.dataframe(neigh_prod.style.format({"LOCAL_PRICE": "{:.2f}", "Distance": "{:.3f}"}))
 
-st.write(neigh_prod)
 
-
-
-#st.dataframe(neigh_prod.style.format({"LOCAL_PRICE": "{:.2f}", "Distance": "{:.3f}"}))
 
 #------------------ Find similarities -----------------
 
