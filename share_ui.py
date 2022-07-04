@@ -17,7 +17,9 @@ from gsheetsdb import connect
 def get_df(url):
     gsheet_url = st.secrets[url]
     conn = connect()
+    print('yes')
     rows = conn.execute(f'SELECT * FROM "{gsheet_url}"')
+    print('yes')
     df = pd.DataFrame(rows)
     return df
 
