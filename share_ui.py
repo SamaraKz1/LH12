@@ -31,12 +31,12 @@ wordcounts = vectorizer.fit_transform(descriptions).toarray()
 
 #----------------------TITLES------------------
 st.set_page_config(page_title="LH12 Price Recommendation", layout="wide", page_icon='📝') 
-#st.title("Recommendation for substitute product")
+st.title("Recommendation for substitute product")
 
 #--------------------- SIDEBAR ----------------
 
-#st.sidebar.title("Product Description")
-#category = st.sidebar.selectbox("Select category group area", ['Site Products & Logistics', 'IT (Server & Storage)'])
+st.sidebar.title("Product Description")
+category = st.sidebar.selectbox("Select category group area", ['Site Products & Logistics', 'IT (Server & Storage)'])
 
 #description = st.sidebar.selectbox("Select description", data['DESCRIPTION_TEXT'].unique())
 
