@@ -24,7 +24,8 @@ def get_df(gsheet_url):
     return df
 
 
-data = get_df(st.secrets["gsheet_url_data"])
+
+data = get_df(st.secrets["gsheet_url_swb"])
 descriptions = sorted(set(data['DESCRIPTION']))
 vectorizer = CountVectorizer(input='content', max_features=2500)
 wordcounts = vectorizer.fit_transform(descriptions).toarray()
@@ -37,10 +38,14 @@ st.title("Recommendation for substitute product")
 st.sidebar.title("Product Description")
 category = st.sidebar.selectbox("Select category group area", ['Site Products & Logistics', 'IT (Server & Storage)'])
 
-description = st.sidebar.selectbox("Select description", data['DESCRIPTION_TEXT'].unique())
+if category == 'Site Products & Logistics':
 
-list_specifications = data[data['DESCRIPTION_TEXT']==description]['DESCRIPTION'].unique()
-product = st.sidebar.selectbox("Select specifications", list_specifications)
+    description = st.sidebar.selectbox("Select description", data['DESCRIPTION_TEXT'].unique())
+    list_specifications = data[data['DESCRIPTION_TEXT']==description]['DESCRIPTION'].unique()
+    product = st.sidebar.selectbox("Select specifications", list_specifications)
+
+elif category == 'IT (Server & Storage)':
+    st.write('To be prepared')
 
 #============================ Body ==============================
 
