@@ -13,6 +13,8 @@ from scipy.spatial.distance import pdist, cdist, squareform
 
 from gsheetsdb import connect
 
+st.set_page_config(page_title="LH12 Price Recommendation", layout="wide", page_icon='📝') 
+
 # Connect to Google Sheets
 @st.cache(hash_funcs={pd.DataFrame: lambda _: None})
 def get_df(gsheet_url):
@@ -29,7 +31,6 @@ vectorizer = CountVectorizer(input='content', max_features=2500)
 wordcounts = vectorizer.fit_transform(descriptions).toarray()
 
 #----------------------TITLES------------------
-st.set_page_config(page_title="LH12 Price Recommendation", layout="wide", page_icon='📝') 
 st.title("Recommendation for substitute product")
 
 #--------------------- SIDEBAR ----------------
