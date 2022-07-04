@@ -14,7 +14,7 @@ from scipy.spatial.distance import pdist, cdist, squareform
 from gsheetsdb import connect
 
 # Connect to Google Sheets
-#@st.cache#
+@st.cache(hash_funcs={pd.DataFrame: lambda _: None})
 def get_df():
     gsheet_url = st.secrets["gsheet_url_data"]
     conn = connect()
