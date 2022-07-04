@@ -27,10 +27,10 @@ descriptions = sorted(set(data['DESCRIPTION']))
 vectorizer = CountVectorizer(input='content', max_features=2500)
 wordcounts = vectorizer.fit_transform(descriptions).toarray()
 
-st.write(data)
+#st.write(data)
 
 #----------------------TITLES------------------
-#st.set_page_config(page_title="LH12 Price Recommendation", layout="wide", page_icon='📝') 
+st.set_page_config(page_title="LH12 Price Recommendation", layout="wide", page_icon='📝') 
 #st.title("Recommendation for substitute product")
 
 #--------------------- SIDEBAR ----------------
