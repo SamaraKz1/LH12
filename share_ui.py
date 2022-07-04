@@ -72,7 +72,7 @@ distances = cdist(wordcounts, wordcounts[idx].reshape(1,-1), metric='cosine')
 distances = pd.DataFrame(distances, index=descriptions, columns = ['Distance']).reset_index().rename(columns = {'index':'PRODNO'})
 neighbors = distances.nsmallest(n_neigh+1, 'Distance')
 
-neigh_prod = pd.merge(neighbors, data, on=['DESCRIPTION'], how='in').sort_values('Distance').reset_index(drop=True)
+neigh_prod = pd.merge(neighbors, data, on=['DESCRIPTION'], how='inner').sort_values('Distance').reset_index(drop=True)
 
 st.write(neigh_prod)
 
