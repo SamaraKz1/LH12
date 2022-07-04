@@ -64,7 +64,7 @@ st.dataframe(data[(data['DESCRIPTION']==product)].reset_index(drop=True).style.f
 
 st.write(""" ## 📊 Substitude products: """)
 
-n_neigh = st.selectbox("Number of substitude products to recommend", [i+1 for i in range(20)])
+n_neigh = st.text_input("Number of substitude products to recommend")
 
 idx = descriptions.index(product)
 
@@ -75,6 +75,7 @@ neighbors = distances.nsmallest(n_neigh+1, 'Distance')
 neigh_prod = pd.merge(neighbors, data, on='DESCRIPTION', how='inner').sort_values('Distance').drop('DESCRIPTION_TEXT', axis=1).reset_index(drop=True)
 st.dataframe(neigh_prod.style.format({"LOCAL_PRICE": "{:.2f}", "Distance": "{:.3f}"}))
 
+st.write(""" ## 📊 Compare given products: """)
 
 
 #------------------ Find similarities -----------------
