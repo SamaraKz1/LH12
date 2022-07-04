@@ -76,11 +76,11 @@ span[data-baseweb="tag"] {
 )
 
 options = st.multiselect("Select mutiple descriptions to compare", data['DESCRIPTION'].unique())
-st.wrtie(options)
+st.write(options)
 vectorizer = CountVectorizer(input='content', max_features=200)
 wordcounts = vectorizer.fit_transform(options).toarray()
 cosine_dist = pd.DataFrame(squareform(pdist(wordcounts, metric='cosine')), index=options, columns=options)
-st.wrtie(cosine_dist)
+st.write(cosine_dist)
 
 #------------------ Find similarities -----------------
 
