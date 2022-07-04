@@ -28,7 +28,7 @@ vectorizer = CountVectorizer(input='content', max_features=2500)
 wordcounts = vectorizer.fit_transform(descriptions).toarray()
 
 #----------------------TITLES------------------
-st.set_page_config(page_title="LH12 Price Recommendation", layout="wide", page_icon='📝') 
+#st.set_page_config(page_title="LH12 Price Recommendation", layout="wide", page_icon='📝') 
 st.title("Recommendation for substitute product")
 
 #--------------------- SIDEBAR ----------------
@@ -56,7 +56,7 @@ st.sidebar.title("Product Comparison")
 
 #---------------------- Body ------------------
 
-#st.write(" The product info for the selected specification:")
+st.write(" The product info for the selected specification:")
 
 #if category == 'Site Products & Logistics':
 
