@@ -60,9 +60,9 @@ st.write(" The product info for the selected specification:")
 
 #if category == 'Site Products & Logistics':
 
-#st.dataframe(data[(data['DESCRIPTION']==product)].reset_index(drop=True).style.format({"LOCAL_PRICE": "{:.2f}"}))
+st.dataframe(data[(data['DESCRIPTION']==product)].reset_index(drop=True).style.format({"LOCAL_PRICE": "{:.2f}"}))
 
-#st.write(""" ## 📊 Substitude products: """)
+st.write(""" ## 📊 Substitude products: """)
 #distances.index = distances.columns
 
 #n_neigh = st.selectbox("Number of substitude products to recommend", [i+1 for i in range(20)])
