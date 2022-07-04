@@ -76,7 +76,7 @@ span[data-baseweb="tag"] {
 )
 
 options = st.multiselect("Select mutiple descriptions to compare", data['DESCRIPTION'].unique())
-
+st.write(options)
 if len(options > 1):
     vectorizer = CountVectorizer(input='content', max_features=200)
     wordcounts = vectorizer.fit_transform(options).toarray()
