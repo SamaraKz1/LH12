@@ -31,6 +31,7 @@ conn = connect()
 rows = conn.execute(f'SELECT * FROM "{gsheet_url}"')
 
 data = pd.DataFrame(rows)
+st.write(data)
 
 descriptions = sorted(set(data['DESCRIPTION']))
 vectorizer = CountVectorizer(input='content', max_features=2500)
