@@ -17,15 +17,15 @@ st.set_page_config(page_title="LH12 Price Recommendation", layout="wide", page_i
 
 # Connect to Google Sheets
 @st.cache(hash_funcs={pd.DataFrame: lambda _: None})
-def get_df(url):
-    gsheet_url = st.secrets[url]
+def get_df(gsheet_url):
+    #gsheet_url = st.secrets[url]
     conn = connect()
     rows = conn.execute(f'SELECT * FROM "{gsheet_url}"')
     df = pd.DataFrame(rows)
     return df
 
 
-data = get_df("gsheet_url_data")
+data = get_df(st.secrets["gsheet_url_data"])
 descriptions = sorted(set(data['DESCRIPTION']))
 vectorizer = CountVectorizer(input='content', max_features=2500)
 wordcounts = vectorizer.fit_transform(descriptions).toarray()
