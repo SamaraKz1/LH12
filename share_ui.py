@@ -15,10 +15,9 @@ from gsheetsdb import connect
 
 st.set_page_config(page_title="LH12 Price Recommendation", layout="wide", page_icon='📝') 
 
-# Connect to Google Sheets
-@st.cache(hash_funcs={pd.DataFrame: lambda _: None})
+
+@st.cache #(hash_funcs={pd.DataFrame: lambda _: None})
 def get_df(gsheet_url):
-    #gsheet_url = st.secrets[url]
     conn = connect()
     rows = conn.execute(f'SELECT * FROM "{gsheet_url}"')
     df = pd.DataFrame(rows)
