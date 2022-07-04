@@ -23,14 +23,14 @@ def get_df(url):
     df = pd.DataFrame(rows)
     return df
 
-
+st.write('yes')
 #data = get_df("gsheet_url_data")
 
-gsheet_url = "https://docs.google.com/spreadsheets/d/1J85lbEUpc4GaERN4DQA-b6nfATQDjauJOH7IfnFmZ1M/edit?usp=sharing"
-conn = connect()
-rows = conn.execute(f'SELECT * FROM "{gsheet_url}"')
+#gsheet_url = "https://docs.google.com/spreadsheets/d/1J85lbEUpc4GaERN4DQA-b6nfATQDjauJOH7IfnFmZ1M/edit?usp=sharing"
+#conn = connect()
+#rows = conn.execute(f'SELECT * FROM "{gsheet_url}"')
 
-data = = pd.DataFrame(rows)
+#data = = pd.DataFrame(rows)
 
 descriptions = sorted(set(data['DESCRIPTION']))
 vectorizer = CountVectorizer(input='content', max_features=2500)
