@@ -89,13 +89,19 @@ st.write(
     """
     )
 
-idx = descriptions.index(product)
+def find_neighbors(df, product, wordcounts):
+    descriptions = sorted(set(df))
+    idx = descriptions.index(product)
 
-distances = cdist(wordcounts, wordcounts[idx].reshape(1,-1), metric='cosine')
-distances = pd.DataFrame(distances, index=descriptions, columns = ['Distance']).reset_index().rename(columns = {'index':'DESCRIPTION'})
-neighbors = distances.nsmallest(n_neigh+1, 'Distance')
+    distances = cdist(wordcounts, wordcounts[idx].reshape(1,-1), metric='cosine')
+    distances = pd.DataFrame(distances, index=descriptions, columns = ['Distance']).reset_index().rename(columns = {'index':'DESCRIPTION'})
+    neighbors = distances.nsmallest(n_neigh+1, 'Distance')
 
-neigh_prod = pd.merge(neighbors, data, on='DESCRIPTION', how='inner').sort_values('Distance').drop(['DESCRIPTION_TEXT','DESCRIPTION_stem'], axis=1).reset_index(drop=True)
+    return neighbors
+
+neighbors = find_neighbors(data_swb['DESCRIPTION'], product, swb_words)
+
+neigh_prod = pd.merge(neighbors, data_swb, on='DESCRIPTION', how='inner').sort_values('Distance').drop(['DESCRIPTION_TEXT','DESCRIPTION_stem'], axis=1).reset_index(drop=True)
 st.dataframe(neigh_prod.style.format({"LOCAL_PRICE": "{:.2f}", "Distance": "{:.3f}"}))
 
 
