@@ -35,7 +35,7 @@ def word2vec(list_desc):
 def show_sidebar(df, prod_col, desc_col):
     if prod_desc == 'Product Number':
         prodno = st.sidebar.selectbox("Select product number", sorted(df[prod_col].unique()))
-        prod_list = list(data_swb[df[prod_col]==prodno][desc_col])
+        prod_list = list(df[df[prod_col]==prodno][desc_col])
         product = max(prod_list, key=len)
         
     elif prod_desc == 'Description':
