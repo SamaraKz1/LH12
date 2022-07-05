@@ -49,7 +49,7 @@ def show_sidebar(df, prod_col, desc_col):
 
 data_swb = get_df(st.secrets["gsheet_url_swb"])
 data_po = get_df(st.secrets["gsheet_url_po"])
-swb_words = word2vec(data_swb['DESCRIPTION'])
+swb_words = word2vec(data_swb['DESCRIPTION_stem'])
 po_words = word2vec(data_po['MaterialDesc'])
 
 
@@ -99,11 +99,19 @@ def find_neighbors(df, product, wordcounts):
 
     return neighbors
 
-neighbors = find_neighbors(data_swb['DESCRIPTION'], product, swb_words)
 
-neigh_prod = pd.merge(neighbors, data_swb, on='DESCRIPTION', how='inner').sort_values('Distance').drop(['DESCRIPTION_TEXT','DESCRIPTION_stem'], axis=1).reset_index(drop=True)
-st.dataframe(neigh_prod.style.format({"LOCAL_PRICE": "{:.2f}", "Distance": "{:.3f}"}))
+def merge_dfs(df1, df2, key):
+    neigh_prod = pd.merge(df1, df2, on=key, how='inner').sort_values('Distance').reset_index(drop=True)
+    return neigh_prod
 
+if category == 'Site Products & Logistics':
+    df_neighbors = find_neighbors(data_swb['DESCRIPTION'], product, swb_words)
+    neigh_prod = merge_dfs(df_neighbors, data_swb, 'DESCRIPTION')
+
+    st.dataframe(neigh_prod.style.format({"LOCAL_PRICE": "{:.2f}", "Distance": "{:.3f}"}))
+
+elif category == 'IT (Server & Storage)':
+    st.write('TO COME')
 
 #------------------ Find similarities -----------------
 st.write(""" ## 📊 Compare given products: """)
