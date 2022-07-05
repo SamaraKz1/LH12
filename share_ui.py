@@ -64,10 +64,10 @@ category = st.sidebar.selectbox("Select category group area", ['Site Products & 
 prod_desc = st.sidebar.selectbox("Select filter", ['Product Number', 'Description'])
 
 if category == 'Site Products & Logistics':
-    product = show_sidebar(data_swb, 'PRODNO', 'DESCRIPTION')
+    swb_product = show_sidebar(data_swb, 'PRODNO', 'DESCRIPTION')
     
 elif category == 'IT (Server & Storage)':
-    product = show_sidebar(data_po, 'MaterialWithoutRState', 'MaterialDesc')
+    po_product = show_sidebar(data_po, 'MaterialWithoutRState', 'MaterialDesc')
 
 
 #============================ Body ==============================
@@ -105,13 +105,13 @@ def merge_dfs(df1, df2, key):
     return neigh_prod
 
 if category == 'Site Products & Logistics':
-    df_neighbors = find_neighbors(data_swb['DESCRIPTION'], product, swb_words)
+    df_neighbors = find_neighbors(data_swb['DESCRIPTION'], swb_product, swb_words)
     neigh_prod = merge_dfs(df_neighbors, data_swb, 'DESCRIPTION')
 
     st.dataframe(neigh_prod.style.format({"LOCAL_PRICE": "{:.2f}", "Distance": "{:.3f}"}))
 
 elif category == 'IT (Server & Storage)':
-    df_neighbors = find_neighbors(data_po['MaterialDesc'], product, swb_words)
+    df_neighbors = find_neighbors(data_po['MaterialDesc'], po_product, swb_words)
     neigh_prod = merge_dfs(df_neighbors, data_po, 'MaterialDesc')
 
     st.dataframe(neigh_prod.style.format({"Distance": "{:.3f}"}))
