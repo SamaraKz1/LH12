@@ -42,7 +42,8 @@ prod_desc = st.sidebar.selectbox("Select filter", ['Product Number', 'Descriptio
 
 if prod_desc == 'Product Number':
     prodno = st.sidebar.selectbox("Select product number", sorted(data['PRODNO'].unique()))
-    product = data[data['DESCRIPTION']==prodno]
+    prod_list = list(data[data['PRODNO']==prodno]['DESCRIPTION'])
+    product = max(prod_list, key=len)
 elif prod_desc == 'Description':
     description = st.sidebar.selectbox("Select description", data['DESCRIPTION_TEXT'].unique())
     list_specifications = data[data['DESCRIPTION_TEXT']==description]['DESCRIPTION'].unique()
