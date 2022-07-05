@@ -91,7 +91,7 @@ span[data-baseweb="tag"] {
 )
 
 if prod_desc == 'Product Number':
-    products = st.multiselect("Select mutiple products to compare", sorted(data['PRODNO'].unique()))
+    products = sorted(st.multiselect("Select mutiple products to compare", sorted(data['PRODNO'].unique())))
     options = list(set(data[data['PRODNO'].isin(products)]['DESCRIPTION']))
     #options = list(data.iloc[pd.Index(data['PRODNO']).get_indexer(products)]['DESCRIPTION'].unique())
 
