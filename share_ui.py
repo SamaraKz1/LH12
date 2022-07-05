@@ -26,7 +26,7 @@ def get_df(gsheet_url):
 
 
 data = get_df(st.secrets["gsheet_url_swb"])
-descriptions = sorted(set(data['DESCRIPTION']))
+descriptions = sorted(set(data['DESCRIPTION'].str.replace('.','')))
 vectorizer = CountVectorizer(input='content', max_features=2500)
 wordcounts = vectorizer.fit_transform(descriptions).toarray()
 
@@ -91,7 +91,7 @@ span[data-baseweb="tag"] {
 )
 
 if prod_desc == 'Product Number':
-    products = sorted(st.multiselect("Select mutiple products to compare", sorted(data['PRODNO'].unique())))
+    products = st.multiselect("Select mutiple products to compare", sorted(data['PRODNO'].unique()))
     options = list(set(data[data['PRODNO'].isin(products)]['DESCRIPTION']))
     #options = list(data.iloc[pd.Index(data['PRODNO']).get_indexer(products)]['DESCRIPTION'].unique())
 
