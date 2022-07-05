@@ -38,10 +38,15 @@ st.title("Recommendation for substitute product")
 st.sidebar.title("Product Description")
 category = st.sidebar.selectbox("Select category group area", ['Site Products & Logistics', 'IT (Server & Storage)'])
 
-prod_desc = st.sidebar.selectbox("Select one", ['Product Number', 'Description'])
-description = st.sidebar.selectbox("Select description", data['DESCRIPTION_TEXT'].unique())
-list_specifications = data[data['DESCRIPTION_TEXT']==description]['DESCRIPTION'].unique()
-product = st.sidebar.selectbox("Select specifications", list_specifications)
+prod_desc = st.sidebar.selectbox("Select filter", ['Product Number', 'Description'])
+
+if prod_desc == 'Product Number':
+    prodno = st.sidebar.selectbox("Select product number", sorted(data['PRODNO'].unique()))
+    product = data[data['DESCRIPTION']==prodno]
+elif prod_desc == 'Description':
+    description = st.sidebar.selectbox("Select description", data['DESCRIPTION_TEXT'].unique())
+    list_specifications = data[data['DESCRIPTION_TEXT']==description]['DESCRIPTION'].unique()
+    product = st.sidebar.selectbox("Select specifications", list_specifications)
 
 
 #============================ Body ==============================
