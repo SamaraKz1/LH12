@@ -49,7 +49,7 @@ def show_sidebar(df, prod_col, desc_col):
 
 data_swb = get_df(st.secrets["gsheet_url_swb"])
 data_po = get_df(st.secrets["gsheet_url_po"])
-swb_words = word2vec(data_swb['DESCRIPTION_stem'])
+swb_words = word2vec(data_swb['DESCRIPTION'])
 po_words = word2vec(data_po['MaterialDesc'])
 
 
@@ -105,7 +105,7 @@ def merge_dfs(df1, df2, key):
     return neigh_prod
 
 if category == 'Site Products & Logistics':
-    df_neighbors = find_neighbors(data_swb['DESCRIPTION_stem'], product, swb_words)
+    df_neighbors = find_neighbors(data_swb['DESCRIPTION'], product, swb_words)
     neigh_prod = merge_dfs(df_neighbors, data_swb, 'DESCRIPTION')
 
     st.dataframe(neigh_prod.style.format({"LOCAL_PRICE": "{:.2f}", "Distance": "{:.3f}"}))
