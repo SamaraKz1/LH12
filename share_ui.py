@@ -24,10 +24,11 @@ def get_df(gsheet_url):
     df = pd.DataFrame(rows)
     return df
 
-
-def word2vec(list_desc):
+@st.cache(allow_output_mutation=True)
+def word2vec(descs):
+    list_desc = sorted(set(descs))
     vectorizer = CountVectorizer(input='content', max_features=500)
-    wordcounts = vectorizer.fit_transform(descriptions).toarray()
+    wordcounts = vectorizer.fit_transform(list_desc).toarray()
 
     return wordcounts
 
@@ -42,13 +43,14 @@ def show_sidebar(df, prod_col, desc_col):
         #description = st.sidebar.selectbox("Select description", df['DESCRIPTION_TEXT'].unique())
         #list_specifications = data_swb[data_swb['DESCRIPTION_TEXT']==description][desc_col].unique()
         #product = st.sidebar.selectbox("Select specifications", list_specifications)
-        product = st.sidebar.selectbox("Select description", df[desc_col].unique())
+        product = st.sidebar.selectbox("Select description", sorted(df[desc_col].unique()))
 
     return product
 
 data_swb = get_df(st.secrets["gsheet_url_swb"])
 data_po = get_df(st.secrets["gsheet_url_po"])
-descriptions = sorted(set(data_swb['DESCRIPTION']))
+swb_words = word2vec(data_swb['DESCRIPTION'])
+po_words = word2vec(data_po['MaterialDesc'])
 
 
 #----------------------TITLES------------------
@@ -62,10 +64,10 @@ category = st.sidebar.selectbox("Select category group area", ['Site Products & 
 prod_desc = st.sidebar.selectbox("Select filter", ['Product Number', 'Description'])
 
 if category == 'Site Products & Logistics':
-    product  = show_sidebar(data_swb, 'PRODNO', 'DESCRIPTION')
+    product = show_sidebar(data_swb, 'PRODNO', 'DESCRIPTION')
     
 elif category == 'IT (Server & Storage)':
-    product  = show_sidebar(data_po, 'MaterialWithoutRState', 'MaterialDesc')
+    product = show_sidebar(data_po, 'MaterialWithoutRState', 'MaterialDesc')
 
 
 #============================ Body ==============================
