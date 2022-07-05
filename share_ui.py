@@ -112,6 +112,7 @@ if category == 'Site Products & Logistics':
 
 elif category == 'IT (Server & Storage)':
     df_neighbors = find_neighbors(data_po['MaterialDesc'], po_product, po_words)
+    st.write(df_neighbors)
     neigh_prod = merge_dfs(df_neighbors, data_po, 'MaterialDesc')
 
     st.dataframe(neigh_prod.style.format({"Distance": "{:.3f}"}))
