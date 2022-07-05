@@ -111,7 +111,7 @@ if category == 'Site Products & Logistics':
     st.dataframe(neigh_prod.style.format({"LOCAL_PRICE": "{:.2f}", "Distance": "{:.3f}"}))
 
 elif category == 'IT (Server & Storage)':
-    df_neighbors = find_neighbors(data_po['MaterialDesc'], po_product, swb_words)
+    df_neighbors = find_neighbors(data_po['MaterialDesc'], po_product, po_words)
     neigh_prod = merge_dfs(df_neighbors, data_po, 'MaterialDesc')
 
     st.dataframe(neigh_prod.style.format({"Distance": "{:.3f}"}))
