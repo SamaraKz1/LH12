@@ -5,6 +5,7 @@ Run command from inside folder:
 >> streamlit run ui.py
 """
 
+from itertools import product
 import numpy as np
 import pandas as pd
 import streamlit as st
@@ -24,12 +25,31 @@ def get_df(gsheet_url):
     return df
 
 
+def word2vec(list_desc):
+    vectorizer = CountVectorizer(input='content', max_features=500)
+    wordcounts = vectorizer.fit_transform(descriptions).toarray()
 
-data = get_df(st.secrets["gsheet_url_swb"])
-#data['DESCRIPTION'] = data['DESCRIPTION'].str.replace('.','')
-descriptions = sorted(set(data['DESCRIPTION']))
-vectorizer = CountVectorizer(input='content', max_features=2500)
-wordcounts = vectorizer.fit_transform(descriptions).toarray()
+    return wordcounts
+
+
+def show_sidebar(df, prod_col, desc_col):
+    if prod_desc == 'Product Number':
+        prodno = st.sidebar.selectbox("Select product number", sorted(df[prod_col].unique()))
+        prod_list = list(data_swb[df[prod_col]==prodno][desc_col])
+        product = max(prod_list, key=len)
+        
+    elif prod_desc == 'Description':
+        #description = st.sidebar.selectbox("Select description", df['DESCRIPTION_TEXT'].unique())
+        #list_specifications = data_swb[data_swb['DESCRIPTION_TEXT']==description][desc_col].unique()
+        #product = st.sidebar.selectbox("Select specifications", list_specifications)
+        product = st.sidebar.selectbox("Select description", df[desc_col].unique())
+
+    return product
+
+data_swb = get_df(st.secrets["gsheet_url_swb"])
+data_po = get_df(st.secrets["gsheet_url_po"])
+descriptions = sorted(set(data_swb['DESCRIPTION']))
+
 
 #----------------------TITLES------------------
 st.title("Recommendation for substitute product")
@@ -41,23 +61,21 @@ category = st.sidebar.selectbox("Select category group area", ['Site Products & 
 
 prod_desc = st.sidebar.selectbox("Select filter", ['Product Number', 'Description'])
 
-if prod_desc == 'Product Number':
-    prodno = st.sidebar.selectbox("Select product number", sorted(data['PRODNO'].unique()))
-    prod_list = list(data[data['PRODNO']==prodno]['DESCRIPTION'])
-    product = max(prod_list, key=len)
-elif prod_desc == 'Description':
-    description = st.sidebar.selectbox("Select description", data['DESCRIPTION_TEXT'].unique())
-    list_specifications = data[data['DESCRIPTION_TEXT']==description]['DESCRIPTION'].unique()
-    product = st.sidebar.selectbox("Select specifications", list_specifications)
+if category == 'Site Products & Logistics':
+    product  = show_sidebar(data_swb, 'PRODNO', 'DESCRIPTION')
+    
+elif category == 'IT (Server & Storage)':
+    product  = show_sidebar(data_po, 'MaterialWithoutRState', 'MaterialDesc')
 
 
 #============================ Body ==============================
 
 st.write(" The product info for the selected specification:")
 
-#if category == 'Site Products & Logistics':
-
-st.dataframe(data[(data['DESCRIPTION']==product)].reset_index(drop=True).style.format({"LOCAL_PRICE": "{:.2f}"}))
+if category == 'Site Products & Logistics':
+    st.dataframe(data_swb[(data_swb['DESCRIPTION']==product)].reset_index(drop=True).style.format({"LOCAL_PRICE": "{:.2f}"}))
+elif category == 'IT (Server & Storage)':
+    st.dataframe(data_po[(data_po['MaterialDesc']==product)].reset_index(drop=True))
 
 st.write(""" ## 📊 Substitude products: """)
 
@@ -78,6 +96,8 @@ neighbors = distances.nsmallest(n_neigh+1, 'Distance')
 neigh_prod = pd.merge(neighbors, data, on='DESCRIPTION', how='inner').sort_values('Distance').drop(['DESCRIPTION_TEXT','DESCRIPTION_stem'], axis=1).reset_index(drop=True)
 st.dataframe(neigh_prod.style.format({"LOCAL_PRICE": "{:.2f}", "Distance": "{:.3f}"}))
 
+
+#------------------ Find similarities -----------------
 st.write(""" ## 📊 Compare given products: """)
 
 st.markdown(
@@ -106,6 +126,6 @@ if options:
     cosine_dist = pd.DataFrame(squareform(pdist(wordcounts, metric='cosine')), index=options, columns=options)
     st.write(cosine_dist)
 
-#------------------ Find similarities -----------------
+
 
 
