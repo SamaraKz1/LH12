@@ -26,7 +26,7 @@ def get_df(gsheet_url):
 
 
 data = get_df(st.secrets["gsheet_url_swb"])
-data['DESCRIPTION'] = data['DESCRIPTION'].str.replace('.','')
+#data['DESCRIPTION'] = data['DESCRIPTION'].str.replace('.','')
 descriptions = sorted(set(data['DESCRIPTION']))
 vectorizer = CountVectorizer(input='content', max_features=2500)
 wordcounts = vectorizer.fit_transform(descriptions).toarray()
