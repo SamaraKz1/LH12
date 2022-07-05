@@ -92,7 +92,7 @@ span[data-baseweb="tag"] {
 
 if prod_desc == 'Product Number':
     products = st.multiselect("Select mutiple products to compare", sorted(data['PRODNO'].unique()))
-    options = list(data[data['PRODNO'].isin(products)]['DESCRIPTION'].unique())
+    options = data[data['PRODNO'].isin(products)]['DESCRIPTION'].unique()
 elif prod_desc == 'Description':
     options = st.multiselect("Select mutiple descriptions to compare", data['DESCRIPTION'].unique())
 
