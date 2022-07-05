@@ -90,7 +90,11 @@ span[data-baseweb="tag"] {
     unsafe_allow_html=True,
 )
 
-options = st.multiselect("Select mutiple descriptions to compare", data['DESCRIPTION'].unique())
+if prod_desc == 'Product Number':
+    products = st.multiselect("Select mutiple products to compare", sorted(data['PRODNO'].unique()))
+    options = list(data[data['PRODNO'].isin(products)]['DESCRIPTION'])
+elif prod_desc == 'Description':
+    options = st.multiselect("Select mutiple descriptions to compare", data['DESCRIPTION'].unique())
 
 if options:
     vectorizer = CountVectorizer(input='content', max_features=200)
