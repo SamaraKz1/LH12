@@ -142,20 +142,23 @@ def get_comparison(df, prod_desc, prod_col, desc_col):
     return options
 
 
+def calculate_distance(options): 
+    vectorizer = CountVectorizer(input='content', max_features=1000)
+    wordcounts = vectorizer.fit_transform(options).toarray()
+    cosine_dist = pd.DataFrame(squareform(pdist(wordcounts, metric='cosine')), index=options, columns=options)
+    st.write(cosine_dist)
+
+
 if category == 'Site Products & Logistics':
     options = get_comparison(data_swb, prod_desc, 'PRODNO', 'DESCRIPTION')
 
 elif category == 'IT (Server & Storage)':
     options = get_comparison(data_po, prod_desc, 'MaterialWithoutRState', 'MaterialDesc')    
 
+if options:
+        calculate_distance(options)
 
 
-
-    
-#    vectorizer = CountVectorizer(input='content', max_features=200)
-#    wordcounts = vectorizer.fit_transform(options).toarray()
-#    cosine_dist = pd.DataFrame(squareform(pdist(wordcounts, metric='cosine')), index=options, columns=options)
-#    st.write(cosine_dist)
 
 
 
