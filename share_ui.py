@@ -90,7 +90,7 @@ def find_neighbors(df, product, wordcounts):
     idx = descriptions.index(product)
 
     distances = cdist(wordcounts, wordcounts[idx].reshape(1,-1), metric='cosine')
-    distances = pd.DataFrame(distances, index=descriptions, columns = ['Distance']).reset_index().rename(columns = {'index':'DESCRIPTION'})
+    distances = pd.DataFrame(distances, index=descriptions, columns = ['Distance']).reset_index().rename(columns = {'index':df.columns[0]})
     neighbors = distances.nsmallest(n_neigh+1, 'Distance')
 
     return neighbors
