@@ -27,7 +27,7 @@ def get_df(gsheet_url):
 @st.cache(allow_output_mutation=True)
 def word2vec(descs):
     list_desc = sorted(set(descs))
-    vectorizer = CountVectorizer(input='content', max_features=500)
+    vectorizer = CountVectorizer(input='content', max_features=1000)
     wordcounts = vectorizer.fit_transform(list_desc).toarray()
 
     return wordcounts
@@ -53,10 +53,10 @@ swb_words = word2vec(data_swb['DESCRIPTION'])
 po_words = word2vec(data_po['MaterialDesc'])
 
 
-#----------------------TITLES------------------
+#==========================TITLES=======================
 st.title("Recommendation for substitute product")
 st.write(" The product info for the selected specification:")
-#--------------------- SIDEBAR ----------------
+#==========================SIDEBAR & Body===============
 
 st.sidebar.title("Product Description")
 category = st.sidebar.selectbox("Select category group area", ['Site Products & Logistics', 'IT (Server & Storage)'])
@@ -72,13 +72,8 @@ elif category == 'IT (Server & Storage)':
     st.dataframe(data_po[(data_po['MaterialDesc']==po_product)].reset_index(drop=True))
 
 
-#============================ Body ==============================
+#==========================================================
 
-
-
-#if category == 'Site Products & Logistics':
-#elif category == 'IT (Server & Storage)':
-    
 
 st.write(""" ## 📊 Substitude products: """)
 
@@ -118,7 +113,7 @@ elif category == 'IT (Server & Storage)':
 
     st.dataframe(neigh_prod.style.format({"Distance": "{:.3f}"}))
 
-#------------------ Find similarities -----------------
+#=========================Find similarities===========================
 st.write(""" ## 📊 Compare given products: """)
 
 st.markdown(
