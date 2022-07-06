@@ -133,7 +133,7 @@ def get_comparison(df, prod_desc, prod_col, desc_col):
         products = st.multiselect("Select mutiple products to compare", sorted(df[prod_col].unique()))
         options = list(set(df[df[prod_col].isin(products)][desc_col]))
     elif prod_desc == 'Description':
-        options = st.multiselect("Select mutiple descriptions to compare", df['DESCRIPTION'].unique())
+        options = st.multiselect("Select mutiple descriptions to compare", df[desc_col].unique())
     
     return options
 
