@@ -40,9 +40,6 @@ def show_sidebar(df, prod_col, desc_col):
         product = max(prod_list, key=len)
         
     elif prod_desc == 'Description':
-        #description = st.sidebar.selectbox("Select description", df['DESCRIPTION_TEXT'].unique())
-        #list_specifications = data_swb[data_swb['DESCRIPTION_TEXT']==description][desc_col].unique()
-        #product = st.sidebar.selectbox("Select specifications", list_specifications)
         product = st.sidebar.selectbox("Select description", sorted(df[desc_col].unique()))
 
     return product
@@ -74,7 +71,7 @@ elif category == 'IT (Server & Storage)':
     st.dataframe(data_po[(data_po['MaterialDesc']==po_product)].reset_index(drop=True))
 
 
-#==========================================================
+#============================Find Substitude Products==============================
 
 
 st.write(""" ## 📊 Substitude products: """)
@@ -130,13 +127,22 @@ span[data-baseweb="tag"] {
     unsafe_allow_html=True,
 )
 
-if category == 'Site Products & Logistics':
-    if prod_desc == 'Product Number':
-        products = st.multiselect("Select mutiple products to compare", sorted(data_swb['PRODNO'].unique()))
-        options = list(set(data_swb[data_swb['PRODNO'].isin(products)]['DESCRIPTION']))
 
+def get_comparison(df, prod_desc, prod_col, desc_col):
+    if prod_desc == 'Product Number':
+        products = st.multiselect("Select mutiple products to compare", sorted(df[prod_col].unique()))
+        options = list(set(df[df[prod_col].isin(products)][desc_col]))
     elif prod_desc == 'Description':
-        options = st.multiselect("Select mutiple descriptions to compare", data_swb['DESCRIPTION'].unique())
+        options = st.multiselect("Select mutiple descriptions to compare", df['DESCRIPTION'].unique())
+    
+    return options
+
+
+if category == 'Site Products & Logistics':
+    options = get_comparison(data_swb, prod_desc, 'PRODNO', 'DESCRIPTION')
+elif category == 'IT (Server & Storage)':
+    options = get_comparison(data_po, prod_desc, 'MaterialWithoutRState', 'MaterialDesc')    
+
 
 if options:
     st.write(options)
