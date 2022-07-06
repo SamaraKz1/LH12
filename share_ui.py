@@ -55,7 +55,7 @@ po_words = word2vec(data_po['MaterialDesc'])
 
 #----------------------TITLES------------------
 st.title("Recommendation for substitute product")
-
+st.write(" The product info for the selected specification:")
 #--------------------- SIDEBAR ----------------
 
 st.sidebar.title("Product Description")
@@ -72,7 +72,7 @@ elif category == 'IT (Server & Storage)':
 
 #============================ Body ==============================
 
-st.write(" The product info for the selected specification:")
+
 
 if category == 'Site Products & Logistics':
     st.dataframe(data_swb[(data_swb['DESCRIPTION']==product)].reset_index(drop=True).style.format({"LOCAL_PRICE": "{:.2f}"}))
