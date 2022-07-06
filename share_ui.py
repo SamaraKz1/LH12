@@ -130,13 +130,13 @@ span[data-baseweb="tag"] {
     unsafe_allow_html=True,
 )
 
-if prod_desc == 'Product Number':
-    products = st.multiselect("Select mutiple products to compare", sorted(data['PRODNO'].unique()))
-    options = list(set(data[data['PRODNO'].isin(products)]['DESCRIPTION']))
-    #options = list(data.iloc[pd.Index(data['PRODNO']).get_indexer(products)]['DESCRIPTION'].unique())
+if category == 'Site Products & Logistics':
+    if prod_desc == 'Product Number':
+        products = st.multiselect("Select mutiple products to compare", sorted(data_swb['PRODNO'].unique()))
+        options = list(set(data_swb[data_swb['PRODNO'].isin(products)]['DESCRIPTION']))
 
-elif prod_desc == 'Description':
-    options = st.multiselect("Select mutiple descriptions to compare", data['DESCRIPTION'].unique())
+    elif prod_desc == 'Description':
+        options = st.multiselect("Select mutiple descriptions to compare", data_swb['DESCRIPTION'].unique())
 
 if options:
     st.write(options)
