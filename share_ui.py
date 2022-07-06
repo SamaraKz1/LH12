@@ -132,24 +132,32 @@ def get_comparison(df, prod_desc, prod_col, desc_col):
     if prod_desc == 'Product Number':
         products = st.multiselect("Select mutiple products to compare", sorted(df[prod_col].unique()))
         options = list(set(df[df[prod_col].isin(products)][desc_col]))
+        st.write(df[df[prod_col].isin(options)])
+
     elif prod_desc == 'Description':
         options = st.multiselect("Select mutiple descriptions to compare", df[desc_col].unique())
+        st.write(df[df[desc_col].isin(options)])
     
+    #if options:
+    #    show_comparison(df)
+
     return options
 
 
 if category == 'Site Products & Logistics':
     options = get_comparison(data_swb, prod_desc, 'PRODNO', 'DESCRIPTION')
+
 elif category == 'IT (Server & Storage)':
     options = get_comparison(data_po, prod_desc, 'MaterialWithoutRState', 'MaterialDesc')    
 
 
-if options:
-    st.write(options)
-    vectorizer = CountVectorizer(input='content', max_features=200)
-    wordcounts = vectorizer.fit_transform(options).toarray()
-    cosine_dist = pd.DataFrame(squareform(pdist(wordcounts, metric='cosine')), index=options, columns=options)
-    st.write(cosine_dist)
+
+
+    
+#    vectorizer = CountVectorizer(input='content', max_features=200)
+#    wordcounts = vectorizer.fit_transform(options).toarray()
+#    cosine_dist = pd.DataFrame(squareform(pdist(wordcounts, metric='cosine')), index=options, columns=options)
+#    st.write(cosine_dist)
 
 
 
