@@ -65,7 +65,9 @@ prod_desc = st.sidebar.selectbox("Select filter", ['Product Number', 'Descriptio
 
 if category == 'Site Products & Logistics':
     swb_product = show_sidebar(data_swb, 'PRODNO', 'DESCRIPTION')
-    st.dataframe(data_swb[(data_swb['DESCRIPTION']==swb_product)].reset_index(drop=True).style.format({"LOCAL_PRICE": "{:.2f}"}))
+    st.dataframe(
+        data_swb[(data_swb['DESCRIPTION']==swb_product)].reset_index(drop=True).style.format({"LOCAL_PRICE": "{:.2f}"})
+        )
     
 elif category == 'IT (Server & Storage)':
     po_product = show_sidebar(data_po, 'MaterialWithoutRState', 'MaterialDesc')
@@ -90,7 +92,9 @@ def find_neighbors(df, product, wordcounts):
     idx = descriptions.index(product)
 
     distances = cdist(wordcounts, wordcounts[idx].reshape(1,-1), metric='cosine')
-    distances = pd.DataFrame(distances, index=descriptions, columns = ['Distance']).reset_index().rename(columns = {'index':df.name})
+    distances = pd.DataFrame(
+        distances, index=descriptions, columns = ['Distance']
+        ).reset_index().rename(columns = {'index':df.name})
     neighbors = distances.nsmallest(n_neigh+1, 'Distance')
 
     return neighbors
@@ -108,7 +112,6 @@ if category == 'Site Products & Logistics':
 
 elif category == 'IT (Server & Storage)':
     df_neighbors = find_neighbors(data_po['MaterialDesc'], po_product, po_words)
-    st.write(df_neighbors)
     neigh_prod = merge_dfs(df_neighbors, data_po, 'MaterialDesc')
 
     st.dataframe(neigh_prod.style.format({"Distance": "{:.3f}"}))
