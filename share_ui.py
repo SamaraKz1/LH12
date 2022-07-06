@@ -65,11 +65,11 @@ prod_desc = st.sidebar.selectbox("Select filter", ['Product Number', 'Descriptio
 
 if category == 'Site Products & Logistics':
     swb_product = show_sidebar(data_swb, 'PRODNO', 'DESCRIPTION')
-    st.dataframe(data_swb[(data_swb['DESCRIPTION']==product)].reset_index(drop=True).style.format({"LOCAL_PRICE": "{:.2f}"}))
+    st.dataframe(data_swb[(data_swb['DESCRIPTION']==swb_product)].reset_index(drop=True).style.format({"LOCAL_PRICE": "{:.2f}"}))
     
 elif category == 'IT (Server & Storage)':
     po_product = show_sidebar(data_po, 'MaterialWithoutRState', 'MaterialDesc')
-    st.dataframe(data_po[(data_po['MaterialDesc']==product)].reset_index(drop=True))
+    st.dataframe(data_po[(data_po['MaterialDesc']==po_product)].reset_index(drop=True))
 
 
 #============================ Body ==============================
