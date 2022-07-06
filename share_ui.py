@@ -82,7 +82,7 @@ st.write(""" ## 📊 Substitude products: """)
 n_neigh = st.selectbox("Number of substitude products to recommend", [i+1 for i in range(20)])
 st.write(
     """
-    ${Note}$: Distnace is a metric that represents how different the substitude products are to the one you selected. \\
+    Note: Distnace is a metric that represents how different the substitude products are to the one you selected. \\
     It varies from 0 (most similar) to 1 (least similar).
     """
     )
