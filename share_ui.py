@@ -27,7 +27,7 @@ def get_df(gsheet_url):
 @st.cache(allow_output_mutation=True)
 def word2vec(descs):
     list_desc = sorted(set(descs))
-    vectorizer = CountVectorizer(input='content', max_features=1000)
+    vectorizer = CountVectorizer(input='content', max_features=2000)
     wordcounts = vectorizer.fit_transform(list_desc).toarray()
 
     return wordcounts
