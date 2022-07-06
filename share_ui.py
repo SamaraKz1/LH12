@@ -136,10 +136,10 @@ def get_comparison(df, prod_desc, prod_col, desc_col):
 
     elif prod_desc == 'Description':
         options = st.multiselect("Select mutiple descriptions to compare", df[desc_col].unique())
-        st.write(df[df[desc_col].isin(options)])
+        
     
-    #if options:
-    #    show_comparison(df)
+    if options:
+        st.write(df[df[desc_col].isin(options)])
 
     return options
 
