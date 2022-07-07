@@ -147,9 +147,9 @@ def calculate_distance(options):
     vectorizer = CountVectorizer(input='content', max_features=1000)
     wordcounts = vectorizer.fit_transform(options).toarray()
     cosine_dist = pd.DataFrame(squareform(pdist(wordcounts, metric='cosine')), index=options, columns=options)
-    st.write(cosine_dist)
+    #st.write(cosine_dist)
     fig, ax = plt.subplots()
-    sns.heatmap(cosine_dist, vmin = 0, vmax = 1, ax=ax, annot=True)
+    sns.heatmap(cosine_dist, vmin = 0, vmax = 1, cmap = 'GR', ax=ax, annot=True)
     st.write(fig)
 
 
