@@ -136,7 +136,9 @@ def get_comparison(df, prod_desc, prod_col, desc_col):
         options = st.multiselect("Select mutiple descriptions to compare", df[desc_col].unique())
     
     if options:
-        st.write(df[df[desc_col].isin(options)].drop(['DESCRIPTION_stem','DESCRIPTION_TEXT'], axis=1))
+        st.write(df[df[desc_col].isin(options)].drop(
+            ['DESCRIPTION_stem','DESCRIPTION_TEXT'], axis=1)
+            ).reset_index(drop=True)
 
     return options
 
