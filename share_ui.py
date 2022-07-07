@@ -102,7 +102,7 @@ def merge_dfs(df1, df2, key):
 
 if category == 'Site Products & Logistics':
     df_neighbors = find_neighbors(data_swb['DESCRIPTION'], swb_product, swb_words)
-    neigh_prod = merge_dfs(df_neighbors, data_swb, 'DESCRIPTION')
+    neigh_prod = merge_dfs(df_neighbors, data_swb.drop(['DESCRIPTION_stem','DESCRIPTION_TEXT'], axis=1), 'DESCRIPTION')
 
     st.dataframe(neigh_prod.style.format({"LOCAL_PRICE": "{:.2f}", "Distance": "{:.3f}"}))
 
