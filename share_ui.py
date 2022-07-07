@@ -150,7 +150,7 @@ def calculate_distance(options):
     #st.write(cosine_dist)
     fig, ax = plt.subplots(figsize=(6,6))
     sns.heatmap(cosine_dist, vmin = 0, vmax = 1, cmap = 'coolwarm', ax=ax, annot=True)
-    st.write(fig)
+    st.pyplot(fig)
 
 
 if category == 'Site Products & Logistics':
