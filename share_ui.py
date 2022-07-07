@@ -156,8 +156,13 @@ if category == 'Site Products & Logistics':
 elif category == 'IT (Server & Storage)':
     options = get_comparison(data_po, prod_desc, 'MaterialWithoutRState', 'MaterialDesc')    
 
+
 if options:
-        calculate_distance(options)
+    fig, ax = plt.subplots()
+    sns.heatmap(calculate_distance(options), ax=ax)
+    st.write(fig)
+
+    calculate_distance(options)
 
 
 
