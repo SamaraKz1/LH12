@@ -148,6 +148,9 @@ def calculate_distance(options):
     wordcounts = vectorizer.fit_transform(options).toarray()
     cosine_dist = pd.DataFrame(squareform(pdist(wordcounts, metric='cosine')), index=options, columns=options)
     st.write(cosine_dist)
+    fig, ax = plt.subplots()
+    sns.heatmap(cosine_dist, ax=ax)
+    st.write(fig)
 
 
 if category == 'Site Products & Logistics':
@@ -158,10 +161,6 @@ elif category == 'IT (Server & Storage)':
 
 
 if options:
-    fig, ax = plt.subplots()
-    sns.heatmap(calculate_distance(options), ax=ax)
-    st.write(fig)
-
     calculate_distance(options)
 
 
