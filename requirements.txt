@@ -1,3 +1,5 @@
 gsheetsdb
 scikit-learn
+seaborn
+matplotlib
 #protobuf~=3.19.0
