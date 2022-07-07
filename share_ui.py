@@ -136,7 +136,7 @@ def get_comparison(df, prod_desc, prod_col, desc_col):
         options = st.multiselect("Select mutiple descriptions to compare", df[desc_col].unique())
     
     if options:
-        st.write(df[df[desc_col].isin(options)])
+        st.write(df[df[desc_col].isin(options)].drop(['DESCRIPTION_stem','DESCRIPTION_TEXT'], axis=1))
 
     return options
 
@@ -149,7 +149,7 @@ def calculate_distance(options):
 
 
 if category == 'Site Products & Logistics':
-    options = get_comparison(data_swb, prod_desc, 'PRODNO', 'DESCRIPTION')
+    options = get_comparison(data_swb, prod_desc, 'PRODNO', 'DESCRIPTION_stem')
 
 elif category == 'IT (Server & Storage)':
     options = get_comparison(data_po, prod_desc, 'MaterialWithoutRState', 'MaterialDesc')    
