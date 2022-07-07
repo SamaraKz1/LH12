@@ -149,7 +149,7 @@ def calculate_distance(options):
     cosine_dist = pd.DataFrame(squareform(pdist(wordcounts, metric='cosine')), index=options, columns=options)
     st.write(cosine_dist)
     fig, ax = plt.subplots()
-    sns.heatmap(cosine_dist, ax=ax)
+    sns.heatmap(cosine_dist, vmin = 0, vmax = 1, ax=ax, annot=True)
     st.write(fig)
 
 
