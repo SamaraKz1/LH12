@@ -1,8 +1,7 @@
 """
-UI for running product search in database by user input. 
+UI for product search engine and recommendation for substitude products. 
 
-Run command from inside folder:
->> streamlit run ui.py
+'https://samarakz1-lh12-share-ui-k4jh8v.streamlitapp.com/'
 """
 
 from itertools import product
@@ -63,7 +62,7 @@ prod_desc = st.sidebar.selectbox("Select filter", ['Product Number', 'Descriptio
 if category == 'Site Products & Logistics':
     swb_product = show_sidebar(data_swb, 'PRODNO', 'DESCRIPTION')
     st.dataframe(
-        data_swb[(data_swb['DESCRIPTION']==swb_product)].reset_index(drop=True).style.format({"LOCAL_PRICE": "{:.2f}"})
+        data_swb[(data_swb['DESCRIPTION']==swb_product)].drop(['DESCRIPTION_stem','DESCRIPTION_TEXT'], axis=1).reset_index(drop=True).style.format({"LOCAL_PRICE": "{:.2f}"})
         )
     
 elif category == 'IT (Server & Storage)':
