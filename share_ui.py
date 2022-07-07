@@ -148,8 +148,8 @@ def calculate_distance(options):
     wordcounts = vectorizer.fit_transform(options).toarray()
     cosine_dist = pd.DataFrame(squareform(pdist(wordcounts, metric='cosine')), index=options, columns=options)
     #st.write(cosine_dist)
-    fig, ax = plt.subplots(figsize=(3, 3))
-    sns.heatmap(cosine_dist, vmin = 0, vmax = 1, cmap = 'coolwarm', ax=ax, annot=True)
+    fig, ax = plt.subplots(figsize=(len(options), len(options)))
+    sns.heatmap(cosine_dist, vmin = 0, vmax = 1, cmap = 'coolwarm', ax=ax) #, annot=True)
     st.pyplot(fig)
 
 
