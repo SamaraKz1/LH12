@@ -151,7 +151,7 @@ def calculate_distance(options):
 
 
 if category == 'Site Products & Logistics':
-    options = get_comparison(data_swb, prod_desc, 'PRODNO', 'DESCRIPTION_stem')
+    options = get_comparison(data_swb, prod_desc, 'PRODNO', 'DESCRIPTION')
 
 elif category == 'IT (Server & Storage)':
     options = get_comparison(data_po, prod_desc, 'MaterialWithoutRState', 'MaterialDesc')    
