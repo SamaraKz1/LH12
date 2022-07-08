@@ -153,7 +153,7 @@ def calculate_distance(options):
     #st.write(cosine_dist)
     col1, col2 = st.columns([3, 1])
     fig, ax = plt.subplots()
-    sns.heatmap(cosine_dist, vmin = 0, vmax = 1, cmap = 'coolwarm', ax=ax, linewidths=2, annot=True, fmt='.2g')
+    sns.heatmap(cosine_dist, vmin = 0, vmax = 1, cmap = 'coolwarm', ax=ax, linewidths=2, annot=True, fmt='.2f')
     col1.pyplot(fig)
 
 
