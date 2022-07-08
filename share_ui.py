@@ -76,7 +76,7 @@ elif category == 'IT (Server & Storage)':
 #============================Find Substitude Products==============================
 
 
-st.write(""" ## 📊 Substitude products: """)
+st.write(""" ## 📊 Substitute products: """)
 
 n_neigh = st.slider("Number of substitude products to recommend", 1, 10)
 
