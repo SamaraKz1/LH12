@@ -71,14 +71,14 @@ elif category == 'IT (Server & Storage)':
     po_product = show_sidebar(data_po, 'MaterialWithoutRState', 'MaterialDesc')
     st.dataframe(data_po[(data_po['MaterialDesc']==po_product)].reset_index(drop=True))
 
-n_neigh = st.sidebar.slider("Number of substitude products to recommend", 1, 15)
+
 
 #============================Find Substitude Products==============================
 
 
 st.write(""" ## 📊 Substitude products: """)
-#col1, col2 = st.columns([3, 1])
-n_neigh = st.columns([3, 1]).slider("Number of substitude products to recommend", 1, 15)
+
+n_neigh = st.sidebar.slider("Number of substitude products to recommend", 1, 15)
 
 st.write(
     """
