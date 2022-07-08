@@ -77,7 +77,7 @@ elif category == 'IT (Server & Storage)':
 
 st.write(""" ## 📊 Substitude products: """)
 
-n_neigh = st.slider("Number of substitude products to recommend", 0, 20)
+n_neigh = st.slider("Number of substitude products to recommend", 1, 20)
 st.write(
     """
     Note: Distnace is a metric that represents how different the substitude products are to the one you selected. \\
@@ -148,9 +148,10 @@ def calculate_distance(options):
     wordcounts = vectorizer.fit_transform(options).toarray()
     cosine_dist = pd.DataFrame(squareform(pdist(wordcounts, metric='cosine')), index=options, columns=options)
     #st.write(cosine_dist)
+    col1, col2 = st.columns([3, 1])
     fig, ax = plt.subplots()
     sns.heatmap(cosine_dist, vmin = 0, vmax = 1, cmap = 'coolwarm', ax=ax, linewidths=2) #, annot=True)
-    st.pyplot(fig)
+    col1.pyplot(fig)
 
 
 if category == 'Site Products & Logistics':
