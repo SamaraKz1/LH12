@@ -12,8 +12,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.feature_extraction.text import CountVectorizer
 from scipy.spatial.distance import pdist, cdist, squareform
-from streamlit import caching
-caching.clear_cache()
 
 from gsheetsdb import connect
 
