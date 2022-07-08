@@ -18,14 +18,14 @@ from gsheetsdb import connect
 st.set_page_config(page_title="LH12 Price Recommendation", layout="wide", page_icon='📝') 
 
 
-#@st.cache(allow_output_mutation=True, hash_funcs={pd.DataFrame: lambda _: None})
+@st.cache(allow_output_mutation=True, hash_funcs={pd.DataFrame: lambda _: None})
 def get_df(gsheet_url):
     conn = connect()
     rows = conn.execute(f'SELECT * FROM "{gsheet_url}"')
     df = pd.DataFrame(rows)
     return df
 
-#@st.cache(allow_output_mutation=True)
+@st.cache(allow_output_mutation=True)
 def word2vec(descs):
     list_desc = sorted(set(descs))
     vectorizer = CountVectorizer(input='content', max_features=2000)
