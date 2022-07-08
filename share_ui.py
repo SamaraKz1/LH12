@@ -71,13 +71,13 @@ elif category == 'IT (Server & Storage)':
     po_product = show_sidebar(data_po, 'MaterialWithoutRState', 'MaterialDesc')
     st.dataframe(data_po[(data_po['MaterialDesc']==po_product)].reset_index(drop=True))
 
+n_neigh = st.sidebar.slider("Number of substitude products to recommend", 1, 15)
 
 #============================Find Substitude Products==============================
 
 
 st.write(""" ## 📊 Substitude products: """)
 
-n_neigh = st.slider("Number of substitude products to recommend", 1, 15)
 st.write(
     """
     Note: Distnace is a metric that represents how different the substitude products are to the one you selected. \\
