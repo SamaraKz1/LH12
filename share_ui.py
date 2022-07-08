@@ -77,8 +77,8 @@ n_neigh = st.sidebar.slider("Number of substitude products to recommend", 1, 15)
 
 
 st.write(""" ## 📊 Substitude products: """)
-col1, col2 = st.columns([3, 1])
-n_neigh = col1.slider("Number of substitude products to recommend", 1, 15)
+#col1, col2 = st.columns([3, 1])
+n_neigh = st.columns([3, 1]).slider("Number of substitude products to recommend", 1, 15)
 
 st.write(
     """
