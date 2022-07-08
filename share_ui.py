@@ -77,7 +77,7 @@ elif category == 'IT (Server & Storage)':
 
 st.write(""" ## 📊 Substitude products: """)
 
-n_neigh = st.selectbox("Number of substitude products to recommend", [i+1 for i in range(20)])
+n_neigh = st.write("Number of substitude products to recommend", 0, 20)
 st.write(
     """
     Note: Distnace is a metric that represents how different the substitude products are to the one you selected. \\
