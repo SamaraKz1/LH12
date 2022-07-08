@@ -149,7 +149,7 @@ def calculate_distance(options):
     vectorizer = CountVectorizer(input='content', max_features=1000)
     wordcounts = vectorizer.fit_transform(options).toarray()
     cosine_dist = pd.DataFrame(squareform(pdist(wordcounts, metric='cosine')), index=options, columns=options)
-    cosine_dist = cosine_dist * 100
+    cosine_dist = np.round(cosine_dist * 100)
     #st.write(cosine_dist)
     col1, col2 = st.columns([3, 1])
     fig, ax = plt.subplots()
