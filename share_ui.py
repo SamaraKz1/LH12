@@ -64,7 +64,7 @@ prod_desc = st.sidebar.selectbox("Select filter", ['Product Number', 'Descriptio
 if category == 'Site Products & Logistics':
     swb_product = show_sidebar(data_swb, 'PRODNO', 'DESCRIPTION')
     st.dataframe(
-        data_swb[(data_swb['DESCRIPTION']==swb_product)].drop(['DESCRIPTION_stem','DESCRIPTION_TEXT'], axis=1).reset_index(drop=True).style.format({"LOCAL_PRICE": "{:.2f}"})
+        data_swb[(data_swb['DESCRIPTION']==swb_product)].reset_index(drop=True).style.format({"LOCAL_PRICE": "{:.2f}"})
         )
     
 elif category == 'IT (Server & Storage)':
@@ -104,7 +104,7 @@ def merge_dfs(df1, df2, key):
 
 if category == 'Site Products & Logistics':
     df_neighbors = find_neighbors(data_swb['DESCRIPTION'], swb_product, swb_words)
-    neigh_prod = merge_dfs(df_neighbors, data_swb.drop(['DESCRIPTION_stem','DESCRIPTION_TEXT'], axis=1), 'DESCRIPTION')
+    neigh_prod = merge_dfs(df_neighbors, data_swb, 'DESCRIPTION')
 
     st.dataframe(neigh_prod.style.format({"LOCAL_PRICE": "{:.2f}", "Distance": "{:.3f}"}))
 
@@ -138,7 +138,7 @@ def get_comparison(df, prod_desc, prod_col, desc_col):
         options = st.multiselect("Select mutiple descriptions to compare", df[desc_col].unique())
     
     if options:
-        st.write(df[df[desc_col].isin(options)].drop(['DESCRIPTION_stem','DESCRIPTION_TEXT'], axis=1))
+        st.write(df[df[desc_col].isin(options)])
 
     return options
 
