@@ -4,7 +4,6 @@ UI for product search engine and recommendation for substitude products.
 'https://samarakz1-lh12-share-ui-k4jh8v.streamlitapp.com/'
 """
 
-#from itertools import product
 import numpy as np
 import pandas as pd
 import streamlit as st
