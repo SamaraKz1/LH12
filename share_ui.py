@@ -139,7 +139,7 @@ if category == "Site Products & Logistics":
     neigh_prod = neigh_prod[['DESCRIPTION','Distance','PRODNO']].nsmallest(n_neigh+1, "Distance", keep='first').reset_index(drop=True)
 
     st.dataframe(
-        neigh_prod.style.format({"LOCAL_PRICE": "{:.2f}", "Distance": "{:.3f}"})
+        neigh_prod.style#.format({"LOCAL_PRICE": "{:.2f}", "Distance": "{:.3f}"})
     )
 
 
