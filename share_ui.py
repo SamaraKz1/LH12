@@ -136,7 +136,7 @@ def merge_dfs(df1, df2, key):
 if category == "Site Products & Logistics":
     df_neighbors = find_neighbors(data_swb["DESCRIPTION"], swb_product, swb_words)
     neigh_prod = merge_dfs(df_neighbors, data_swb_commodity, "DESCRIPTION")
-    neigh_prod = neigh_prod[['DESCRIPTION','Distance','PRODNO']].nsmallest(n_neigh+1, "Distance", keep='first').reset_index(drop=True)
+    neigh_prod = neigh_prod[['DESCRIPTION','Distance','PRODNO']].drop_duplicates().nsmallest(n_neigh+1, "Distance", keep='first').reset_index(drop=True)
 
     st.dataframe(
         neigh_prod.style#.format({"LOCAL_PRICE": "{:.2f}", "Distance": "{:.3f}"})
