@@ -119,7 +119,7 @@ def find_neighbors(df, product, wordcounts):
         .reset_index()
         .rename(columns={"index": df.name})
     )
-    neighbors = distances.nsmallest(10 * n_neigh, "Distance")
+    neighbors = distances.nsmallest(10 * n_neigh, "Distance", keep='first')
 
     return neighbors
 
