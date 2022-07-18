@@ -70,13 +70,13 @@ prod_desc = st.sidebar.selectbox("Select filter", ["Product Number", "Descriptio
 
 if category == "Site Products & Logistics":
 
-    commodity_list = ['All'] + sorted(data_swb["COMMODITY_AREA_NAME"].unique())
+    commodity_list = ["All"] + sorted(data_swb["COMMODITY_AREA_NAME"].unique())
     swb_commodity = st.sidebar.selectbox("Select commodity area", commodity_list)
 
-    if swb_commodity == 'All':
+    if swb_commodity == "All":
         data_swb_commodity = data_swb.copy()
     else:
-        data_swb_commodity = data_swb[data_swb["COMMODITY_AREA_NAME"]==swb_commodity]
+        data_swb_commodity = data_swb[data_swb["COMMODITY_AREA_NAME"] == swb_commodity]
 
     swb_product = show_sidebar(data_swb_commodity, "PRODNO", "DESCRIPTION")
 
@@ -137,8 +137,17 @@ def merge_dfs(df1, df2, key):
 if category == "Site Products & Logistics":
     df_neighbors = find_neighbors(data_swb["DESCRIPTION"], swb_product, swb_words)
     neigh_prod = merge_dfs(df_neighbors, data_swb_commodity, "DESCRIPTION")
-    neigh_prod = neigh_prod[['DESCRIPTION','Distance','PRODNO']].drop_duplicates().nsmallest(n_neigh+1, "Distance", keep='first')
-    neigh_prod = merge_dfs(neigh_prod, data_swb_commodity, ["DESCRIPTION",'PRODNO']).reset_index(drop=True)
+    neigh_prod = (
+        neigh_prod[["PRODNO", "DESCRIPTION", "Distance"]]
+        .drop_duplicates()
+        .nsmallest(n_neigh + 1, "Distance", keep="first")
+        .reset_index(drop=True)
+    )
+    neigh_prod = (
+        merge_dfs(neigh_prod, data_swb_commodity, ["PRODNO", "DESCRIPTION"])
+        .drop_duplicates(["PRODNO", "DESCRIPTION", "Distance"])
+        .reset_index(drop=True)
+    )
 
     st.dataframe(
         neigh_prod.style.format({"LOCAL_PRICE": "{:.2f}", "Distance": "{:.3f}"})
