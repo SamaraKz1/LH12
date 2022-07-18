@@ -50,7 +50,7 @@ def show_sidebar(df, prod_col, desc_col):
     return product
 
 
-data_swb = get_df(st.secrets["gsheet_url_swb"])
+data_swb = get_df(st.secrets["gsheet_url_swb_status"])
 data_po = get_df(st.secrets["gsheet_url_po"])
 swb_words = word2vec(data_swb["DESCRIPTION"])
 po_words = word2vec(data_po["MaterialDesc"])
