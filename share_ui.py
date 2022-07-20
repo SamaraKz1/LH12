@@ -157,6 +157,17 @@ if category == "Site Products & Logistics":
 elif category == "IT (Server & Storage)":
     df_neighbors = find_neighbors(data_po["MaterialDesc"], po_product, po_words)
     neigh_prod = merge_dfs(df_neighbors, data_po, "MaterialDesc")
+    neigh_prod = (
+        neigh_prod[["MaterialWithoutRState", "MaterialDesc", "Distance"]]
+        .drop_duplicates()
+        .nsmallest(n_neigh + 1, "Distance", keep="first")
+        .reset_index(drop=True)
+    )
+    neigh_prod = (
+        merge_dfs(neigh_prod, data_po, ["MaterialWithoutRState", "MaterialDesc"])
+        .drop_duplicates(["MaterialWithoutRState", "MaterialDesc", "Distance"])
+        .reset_index(drop=True)
+    )
 
     st.dataframe(neigh_prod.style.format({"Distance": "{:.3f}"}))
 
