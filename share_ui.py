@@ -99,7 +99,7 @@ elif category == "IT (Server & Storage)":
 
 st.write(""" ## 📊 Substitute products: """)
 
-n_neigh = st.slider("Number of substitude products to recommend", 1, 10)
+n_neigh = st.slider("Number of substitude products to recommend", 1, 15)
 
 st.write(
     """
