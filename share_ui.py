@@ -13,6 +13,9 @@ from sklearn.feature_extraction.text import CountVectorizer
 from scipy.spatial.distance import pdist, cdist, squareform
 
 from gsheetsdb import connect
+from streamlit_autorefresh import st_autorefresh
+
+st_autorefresh(5000)
 
 st.set_page_config(page_title="LH12 Price Recommendation", layout="wide", page_icon="📝")
 
@@ -103,8 +106,8 @@ n_neigh = st.slider("Number of substitude products to recommend", 1, 15)
 
 st.write(
     """
-    Note: Distnace is a metric that represents how different the substitude products are to the one you selected. \\
-    It varies from 0 (most similar) to 1 (least similar).
+    Note: Similarity is a metric that represents how similar the substitude products are to the one you selected. \\
+    It varies from 0 (least similar) to 1 (most similar).
     """
 )
 
@@ -134,6 +137,12 @@ def merge_dfs(df1, df2, key):
     return neigh_prod
 
 
+def get_similarity(df):
+    df["Distance"] = 1 -  df["Distance"]
+    df = df.rename(columns={"Distance": "Similarity"})
+    return df
+
+
 if category == "Site Products & Logistics":
     df_neighbors = find_neighbors(data_swb["DESCRIPTION"], swb_product, swb_words)
     neigh_prod = merge_dfs(df_neighbors, data_swb_commodity, "DESCRIPTION")
@@ -148,9 +157,9 @@ if category == "Site Products & Logistics":
         .drop_duplicates(["PRODNO", "DESCRIPTION", "Distance"])
         .reset_index(drop=True)
     )
-
+    neigh_prod = get_similarity(neigh_prod)
     st.dataframe(
-        neigh_prod.style.format({"LOCAL_PRICE": "{:.2f}", "Distance": "{:.3f}"})
+        neigh_prod.style.format({"LOCAL_PRICE": "{:.2f}", "Similarity": "{:.3f}"})
     )
 
 
@@ -168,7 +177,7 @@ elif category == "IT (Server & Storage)":
         .drop_duplicates(["MaterialWithoutRState", "MaterialDesc", "Distance"])
         .reset_index(drop=True)
     )
-
+    neigh_prod = get_similarity(neigh_prod)
     st.dataframe(neigh_prod.style.format({"Distance": "{:.3f}"}))
 
 # =========================Find similarities===========================
@@ -199,7 +208,10 @@ def get_comparison(df, prod_desc, prod_col, desc_col):
         )
 
     if options:
-        st.write(df[df[desc_col].isin(options)])
+        #st.write(df[df[desc_col].isin(options)])
+        st.write(df[df[desc_col].isin(options)].drop_duplicates([prod_col, desc_col])
+        .reset_index(drop=True)
+        )
 
     return options
 
@@ -210,7 +222,7 @@ def calculate_distance(options):
     cosine_dist = pd.DataFrame(
         squareform(pdist(wordcounts, metric="cosine")), index=options, columns=options
     )
-    cosine_dist = np.round(cosine_dist * 100)
+    cosine_dist = 100 - np.round(cosine_dist * 100)
     # st.write(cosine_dist)
     col1, col2 = st.columns([3, 1])
     fig, ax = plt.subplots()
@@ -218,7 +230,7 @@ def calculate_distance(options):
         cosine_dist,
         vmin=0,
         vmax=100,
-        cmap="coolwarm",
+        cmap="PiYG",
         ax=ax,
         linewidths=2,
         annot=True,
