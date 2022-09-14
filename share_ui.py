@@ -13,9 +13,6 @@ from sklearn.feature_extraction.text import CountVectorizer
 from scipy.spatial.distance import pdist, cdist, squareform
 
 from gsheetsdb import connect
-from streamlit_autorefresh import st_autorefresh
-
-st_autorefresh(5000)
 
 st.set_page_config(page_title="LH12 Price Recommendation", layout="wide", page_icon="📝")
 
